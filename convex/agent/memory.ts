@@ -174,6 +174,9 @@ export async function searchMemories(
 }
 
 function makeRange(values: number[]) {
+  if (values.length === 0) {
+    return [0, 0] as const;
+  }
   const min = Math.min(...values);
   const max = Math.max(...values);
   return [min, max] as const;
@@ -181,6 +184,9 @@ function makeRange(values: number[]) {
 
 function normalize(value: number, range: readonly [number, number]) {
   const [min, max] = range;
+  if (max === min) {
+    return 0;
+  }
   return (value - min) / (max - min);
 }
 
